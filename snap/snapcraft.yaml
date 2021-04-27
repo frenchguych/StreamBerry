@@ -8,8 +8,10 @@ version: git
 grade: devel
 
 architectures:
-  - build-on: [amd64, armhf]
-    run-on: [amd64, armhf]
+  - build-on: amd64
+    run-on: amd64
+  - build-on: armhf
+    run-on: armhf
 
 apps:
   streamberry:
