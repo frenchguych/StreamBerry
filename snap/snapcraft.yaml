@@ -1,0 +1,49 @@
+name: streamberry
+base: core20
+summary: streamberry
+description: |
+  streamberry
+confinement: strict
+version: git
+grade: devel
+
+architectures:
+  - build-on: [amd64, armhf]
+    run-on: [amd64, armhf]
+
+apps:
+  streamberry:
+    command: usr/bin/wrapper.sh
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
+      LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu
+      QT_DEBUG_PLUGINS: 0 # set to 1 to debug plugins problem
+    plugs:
+      - home
+      - removable-media
+      - desktop
+      - desktop-legacy
+      - opengl
+      - x11
+      - wayland
+      - network
+      - network-bind
+
+parts:
+  streamberry:
+    source: src/
+    plugin: dump
+    stage-packages:
+      - python3-pyqt5
+      - python3-yaml
+  
+  wrapper:
+    source: files/
+    plugin: dump
+    after:
+      - streamberry
+
+layout:
+  /usr/bin/platforms:
+    bind: $SNAP/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
+
