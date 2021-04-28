@@ -47,5 +47,5 @@ parts:
 
 layout:
   /usr/bin/platforms:
-    bind: $SNAP/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/qt5/plugins/platforms
 
