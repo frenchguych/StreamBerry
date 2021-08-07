@@ -2,7 +2,7 @@ from enum import Enum
 
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QSizePolicy
-from ui.toolkit.BaseButton import BaseButton
+from toolkit.ui.BaseButton import BaseButton
 
 
 class NavigationButton(BaseButton):

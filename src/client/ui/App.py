@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QApplication
-from ui.client.MainWindow import MainWindow
+
+from client.ui.MainWindow import MainWindow
 
 
-class StreamBerryApp(QApplication):
+class App(QApplication):
     def __init__(self) -> None:
         self.app = QApplication([])
         self.initComponent()

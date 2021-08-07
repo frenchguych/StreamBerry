@@ -1,7 +1,13 @@
+from client.ui.GridButton import GridButton
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QGridLayout, QPushButton, QSizePolicy, QStyle, QStyleOptionButton, QWidget
-
-from ui.client.GridButton import GridButton
+from PyQt5.QtWidgets import (
+    QGridLayout,
+    QPushButton,
+    QSizePolicy,
+    QStyle,
+    QStyleOptionButton,
+    QWidget,
+)
 
 
 class Grid(QWidget):
