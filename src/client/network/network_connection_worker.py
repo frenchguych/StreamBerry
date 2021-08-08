@@ -1,11 +1,14 @@
-from typing import Callable
+from typing import Callable, Optional
 
-from toolkit.core.BaseWorker import BaseWorker
-from zeroconf import Zeroconf
+from zeroconf import ServiceInfo, Zeroconf
+
+from toolkit import BaseWorker
 
 
 class NetworkConnectionWorker(BaseWorker):
-    def __init__(self, finishedHandler: Callable) -> None:
+    def __init__(
+        self, finishedHandler: Callable[[Optional[ServiceInfo]], None]
+    ) -> None:
         super().__init__()
         self.finishedHandler = finishedHandler
 
@@ -16,4 +19,4 @@ class NetworkConnectionWorker(BaseWorker):
         )
         print(serviceinfo)
         self.stop()
-        self.finishedHandler()
+        self.finishedHandler(serviceinfo)

@@ -1,6 +1,7 @@
-from client.ui.NavigationButton import NavigationButton
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QWidget
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QLayoutItem, QSizePolicy, QWidget
+
+from client import NavigationButton
 
 
 class Footer(QWidget):
@@ -13,12 +14,12 @@ class Footer(QWidget):
 
     def initComponent(self) -> None:
         layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(3, 0, 3, 0)
 
-        statusText = QLabel()
-        statusText.setText("Connecting...")
-        statusText.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        layout.addWidget(statusText)
+        self.statusText = QLabel()
+        self.statusText.setText("Connecting...")
+        self.statusText.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        layout.addWidget(self.statusText)
 
         previousPageButton = NavigationButton(
             NavigationButton.Type.PREVIOUS, "assets/left-arrow.png"
@@ -36,3 +37,14 @@ class Footer(QWidget):
         self.setLayout(layout)
 
         self.buttons = [previousPageButton, nextPageButton, upButton]
+
+    def setStatus(self, status: str) -> None:
+        self.statusText.setText(status)
+
+    def enableButtons(self) -> None:
+        for i in range(self.layout().count()):
+            obj: QLayoutItem = self.layout().itemAt(i)
+            if isinstance(obj.widget(), NavigationButton):
+                btn: NavigationButton = obj.widget()
+                btn.setDisabled(False)
+        

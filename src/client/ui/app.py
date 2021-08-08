@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import QApplication
 
-from client.ui.MainWindow import MainWindow
+from client.ui.main_window import MainWindow
 
 
 class App(QApplication):
     def __init__(self) -> None:
+        super().__init__([])
         self.app = QApplication([])
         self.initComponent()
         self.initListeners()
@@ -15,6 +16,3 @@ class App(QApplication):
 
     def initListeners(self) -> None:
         pass
-
-    def exec(self) -> None:
-        self.app.exec()

@@ -5,7 +5,4 @@ from PyQt5.QtWidgets import QPushButton
 class BaseButton(QPushButton):
     def __init__(self, iconFile: str) -> None:
         super().__init__(QIcon(iconFile), "")
-
-    def handle(self) -> None:
-        """Must be implemented by children"""
-        pass
+        self.initialized = False

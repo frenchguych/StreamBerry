@@ -1,8 +1,7 @@
 from typing import Callable
+from toolkit.core.base_worker import BaseWorker
 
-from PyQt5.QtCore import QObject, pyqtSignal
-from toolkit.core.BaseWorker import BaseWorker
-from toolkit.ui.BaseButton import BaseButton
+from toolkit.ui.base_button import BaseButton
 
 
 class ButtonWorker(BaseWorker):
@@ -12,6 +11,12 @@ class ButtonWorker(BaseWorker):
         self.finishedHandler = finishedHandler
 
     def run(self) -> None:
-        self.button.handle()
+        # Do something with the button
+        if self.button.initialized:
+            print(f"Do something with the button ! {self.button}")
+
+        # Stop the worker thread
         self.stop()
+
+        # Callback to the mainWindow
         self.finishedHandler()
