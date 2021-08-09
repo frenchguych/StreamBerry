@@ -1,2 +1,4 @@
+PyQt5
+pylint
+zeroconf
 mypy-protobuf
-black
