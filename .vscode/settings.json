@@ -12,6 +12,6 @@
     "python.analysis.typeCheckingMode": "basic",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "python.linting.pylintPath": "/home/yannick/.local/bin/pylint",
+    "python.linting.pylintPath": "pylint",
     "python.languageServer": "Pylance",
 }
