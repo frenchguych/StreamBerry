@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from client import GridButton
+from client.ui.grid_button import GridButton
 
 from toolkit.ui.base_button import BaseButton
 
