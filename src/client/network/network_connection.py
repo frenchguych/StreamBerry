@@ -9,7 +9,7 @@ from google.protobuf.any_pb2 import Any
 
 from proto.streamberry_pb2 import GetPage
 
-from toolkit.core.base_network_connection import BaseNetworkConnection
+from client.toolkit.core.base_network_connection import BaseNetworkConnection
 
 
 class NetworkConnection(BaseNetworkConnection):

@@ -1,7 +1,7 @@
 from typing import Callable
-from toolkit.core.base_worker import BaseWorker
+from client.toolkit.core.base_worker import BaseWorker
 
-from toolkit.ui.base_button import BaseButton
+from client.toolkit.ui.base_button import BaseButton
 
 
 class ButtonWorker(BaseWorker):

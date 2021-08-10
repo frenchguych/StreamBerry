@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QSizePolicy
 
-from toolkit.ui.base_button import BaseButton
+from client.toolkit.ui.base_button import BaseButton
 
 
 class GridButton(BaseButton):

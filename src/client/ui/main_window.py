@@ -7,9 +7,9 @@ from client.network.network_connection import NetworkConnection
 from client.network.network_connection_worker import NetworkConnectionWorker
 from client.ui.footer import Footer
 from client.ui.grid import Grid
-from toolkit.core.base_worker import BaseWorker
-from toolkit.ui.base_button import BaseButton
-from toolkit.ui.button_worker import ButtonWorker
+from client.toolkit.core.base_worker import BaseWorker
+from client.toolkit.ui.base_button import BaseButton
+from client.toolkit.ui.button_worker import ButtonWorker
 
 
 class MainWindow(QWidget):

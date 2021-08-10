@@ -6,6 +6,7 @@
             "--proto_path=${workspaceRoot}/proto",
             "--python_out=${workspaceRoot}/src/proto",
             "--mypy_out=quiet:${workspaceRoot}/src/proto",
+            "--plugin=protoc-gen-mypy=${workspaceRoot}/venv/bin/protoc-gen-mypy"
         ]
     },
     "python.analysis.diagnosticMode": "workspace",

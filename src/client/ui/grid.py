@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QIcon
 
 from client.ui.grid_button import GridButton
-from toolkit.ui.base_button import BaseButton
+from client.toolkit.ui.base_button import BaseButton
 
 
 class Grid(QWidget):

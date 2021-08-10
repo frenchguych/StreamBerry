@@ -1,10 +1,9 @@
 import socket
-import threading
 from typing import Callable
 
 from zeroconf import Zeroconf
 
-from toolkit import BaseWorker
+from client.toolkit.core.base_worker import BaseWorker
 
 
 class NetworkConnectionWorker(BaseWorker):

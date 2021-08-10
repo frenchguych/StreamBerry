@@ -1,3 +1,4 @@
 #! /bin/bash
 
-python3 src/_client.py
+ROOT=$(dirname ${0})
+PYTHONPATH=${ROOT}/src python3 src/client/main.py
