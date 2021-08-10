@@ -19,27 +19,20 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\x1c\n\x04Ping\x12\x14\n\x0cping_message\x18\x01 \x01(\t\"\x1c\n\x04Pong\x12\x14\n\x0cpong_message\x18\x02 \x01(\t2H\n\x04\x45\x63ho\x12@\n\x04\x45\x63ho\x12\x1b.gen.proto.streamberry.Ping\x1a\x1b.gen.proto.streamberry.Pongb\x06proto3'
+  serialized_pb=b'\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\t\n\x07GetPageb\x06proto3'
 )
 
 
 
 
-_PING = _descriptor.Descriptor(
-  name='Ping',
-  full_name='gen.proto.streamberry.Ping',
+_GETPAGE = _descriptor.Descriptor(
+  name='GetPage',
+  full_name='gen.proto.streamberry.GetPage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
-    _descriptor.FieldDescriptor(
-      name='ping_message', full_name='gen.proto.streamberry.Ping.ping_message', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -53,84 +46,18 @@ _PING = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=72,
+  serialized_end=53,
 )
 
-
-_PONG = _descriptor.Descriptor(
-  name='Pong',
-  full_name='gen.proto.streamberry.Pong',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pong_message', full_name='gen.proto.streamberry.Pong.pong_message', index=0,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=74,
-  serialized_end=102,
-)
-
-DESCRIPTOR.message_types_by_name['Ping'] = _PING
-DESCRIPTOR.message_types_by_name['Pong'] = _PONG
+DESCRIPTOR.message_types_by_name['GetPage'] = _GETPAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Ping = _reflection.GeneratedProtocolMessageType('Ping', (_message.Message,), {
-  'DESCRIPTOR' : _PING,
+GetPage = _reflection.GeneratedProtocolMessageType('GetPage', (_message.Message,), {
+  'DESCRIPTOR' : _GETPAGE,
   '__module__' : 'streamberry_pb2'
-  # @@protoc_insertion_point(class_scope:gen.proto.streamberry.Ping)
+  # @@protoc_insertion_point(class_scope:gen.proto.streamberry.GetPage)
   })
-_sym_db.RegisterMessage(Ping)
+_sym_db.RegisterMessage(GetPage)
 
-Pong = _reflection.GeneratedProtocolMessageType('Pong', (_message.Message,), {
-  'DESCRIPTOR' : _PONG,
-  '__module__' : 'streamberry_pb2'
-  # @@protoc_insertion_point(class_scope:gen.proto.streamberry.Pong)
-  })
-_sym_db.RegisterMessage(Pong)
-
-
-
-_ECHO = _descriptor.ServiceDescriptor(
-  name='Echo',
-  full_name='gen.proto.streamberry.Echo',
-  file=DESCRIPTOR,
-  index=0,
-  serialized_options=None,
-  create_key=_descriptor._internal_create_key,
-  serialized_start=104,
-  serialized_end=176,
-  methods=[
-  _descriptor.MethodDescriptor(
-    name='Echo',
-    full_name='gen.proto.streamberry.Echo.Echo',
-    index=0,
-    containing_service=None,
-    input_type=_PING,
-    output_type=_PONG,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-])
-_sym_db.RegisterServiceDescriptor(_ECHO)
-
-DESCRIPTOR.services_by_name['Echo'] = _ECHO
 
 # @@protoc_insertion_point(module_scope)

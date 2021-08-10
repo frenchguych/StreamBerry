@@ -8,7 +8,7 @@
             "name": "Python : client",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/client.py",
+            "program": "${workspaceFolder}/src/_client.py",
             "console": "integratedTerminal"
         }
     ]

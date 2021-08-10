@@ -2,7 +2,7 @@ import functools
 import typing
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
-from zeroconf import ServiceInfo
+from client.network.network_connection import NetworkConnection
 
 from client.network.network_connection_worker import NetworkConnectionWorker
 from client.ui.footer import Footer
@@ -18,6 +18,7 @@ class MainWindow(QWidget):
     ) -> None:
         super().__init__()
         self.worker: typing.Optional[BaseWorker] = None
+        self.networkConnection: NetworkConnection
         self.initComponent()
         self.initListeners()
         self.initCommunications()
@@ -30,6 +31,7 @@ class MainWindow(QWidget):
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(10)
         self.setLayout(layout)
+
 
         self.grid = Grid()
         layout.addWidget(self.grid)
@@ -55,13 +57,20 @@ class MainWindow(QWidget):
             self.worker.start()
 
     def initNetwork(self) -> None:
-        def handleFinished(serviceInfo: typing.Optional[ServiceInfo]) -> None:
-            if serviceInfo is None:
+
+        self.networkConnection = NetworkConnection()
+
+        def handleFinished(address: str, port: int) -> None:
+            if port == 0:
                 self.footer.setStatus("Cannot connect to server")
             else:
-                self.footer.setStatus("Connected.")
+                self.footer.setStatus(f"Connected to {address} on port {port}.")
                 self.footer.enableButtons()
                 self.grid.enableButtons()
+                self.networkConnection.connect(address, port)
+                icons = self.networkConnection.getPage()
+                print(f"Got myself some icons : {icons}")
+                self.grid.setIcons(icons)
 
         if self.worker is None:
             self.worker = NetworkConnectionWorker(handleFinished)

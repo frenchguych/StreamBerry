@@ -2,14 +2,5 @@ syntax = "proto3";
 
 package gen.proto.streamberry;
 
-message Ping {
-    string ping_message = 1;
-}
-
-message Pong {
-    string pong_message = 2;
-}
-
-service Echo {
-    rpc Echo(Ping) returns (Pong);
+message GetPage {
 }
