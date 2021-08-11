@@ -15,4 +15,5 @@
     "python.linting.pylintEnabled": true,
     "python.linting.pylintPath": "venv/bin/pylint",
     "python.languageServer": "Pylance",
+    "python.formatting.provider": "black"
 }

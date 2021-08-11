@@ -5,10 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python : client",
+            "name": "client",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/_client.py",
+            "program": "${workspaceFolder}/src/client/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/server/main.py",
             "console": "integratedTerminal"
         }
     ]
