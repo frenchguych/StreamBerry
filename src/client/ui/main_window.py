@@ -1,24 +1,20 @@
 import functools
-import typing
+from typing import Optional, List
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
-from client.network.network_connection import NetworkConnection
+from PyQt5.QtGui import QIcon
 
-from client.network.network_connection_worker import NetworkConnectionWorker
-from client.ui.footer import Footer
-from client.ui.grid import Grid
-from client.toolkit.core.base_worker import BaseWorker
-from client.toolkit.ui.base_button import BaseButton
-from client.toolkit.ui.button_worker import ButtonWorker
-
+from client.ui import Footer, Grid
+from client.toolkit.core import BaseWorker
+from client.toolkit.ui import BaseButton, ButtonWorker
+from client import signals
 
 class MainWindow(QWidget):
     def __init__(
         self,
     ) -> None:
         super().__init__()
-        self.worker: typing.Optional[BaseWorker] = None
-        self.networkConnection: NetworkConnection
+        self.worker: Optional[BaseWorker] = None
         self.initComponent()
         self.initListeners()
         self.initCommunications()
@@ -47,6 +43,9 @@ class MainWindow(QWidget):
 
     def initCommunications(self) -> None:
         self.worker = None
+        signals.responses.connected.connect(self.connectedToServer)
+        signals.responses.connectionFailed.connect(self.connectionFailed)
+        signals.responses.pages.connect(self.pages)
 
     def handleFinished(self) -> None:
         self.worker = None
@@ -56,22 +55,19 @@ class MainWindow(QWidget):
             self.worker = ButtonWorker(btn, self.handleFinished)
             self.worker.start()
 
-    def initNetwork(self) -> None:
+    @staticmethod
+    def initNetwork() -> None:
+        signals.requests.connect.emit()
 
-        self.networkConnection = NetworkConnection()
+    def connectedToServer(self) -> None:
+        self.footer.setStatus("Connected.")
+        self.footer.enableButtons()
+        self.grid.enableButtons()
+        signals.requests.get_page.emit(0)
 
-        def handleFinished(address: str, port: int) -> None:
-            if port == 0:
-                self.footer.setStatus("Cannot connect to server")
-            else:
-                self.footer.setStatus(f"Connected to {address} on port {port}.")
-                self.footer.enableButtons()
-                self.grid.enableButtons()
-                self.networkConnection.connect(address, port)
-                icons = self.networkConnection.getPage()
-                print(f"Got myself some icons : {icons}")
-                self.grid.setIcons(icons)
+    def connectionFailed(self) -> None:
+        self.footer.setStatus("Connection failed")
 
-        if self.worker is None:
-            self.worker = NetworkConnectionWorker(handleFinished)
-            self.worker.start()
+    def pages(self, icons: List[QIcon]) -> None:
+        print(f"Got myself some icons : {icons}")
+        self.grid.setIcons(icons)

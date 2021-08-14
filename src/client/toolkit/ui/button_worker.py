@@ -1,5 +1,5 @@
 from typing import Callable
-from client.toolkit.core.base_worker import BaseWorker
+from client.toolkit.core import BaseWorker
 
 from client.toolkit.ui.base_button import BaseButton
 

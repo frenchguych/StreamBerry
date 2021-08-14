@@ -1,7 +1,7 @@
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QLayoutItem, QSizePolicy, QWidget
 
-from client.ui.navigation_button import NavigationButton
+from client.ui import NavigationButton
 
 
 class Footer(QWidget):

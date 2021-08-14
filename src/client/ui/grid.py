@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (
 
 from PyQt5.QtGui import QIcon
 
-from client.ui.grid_button import GridButton
+from client.ui import GridButton
 from client.toolkit.ui.base_button import BaseButton
 
 
