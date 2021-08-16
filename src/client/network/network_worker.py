@@ -39,29 +39,25 @@ class NetworkWorker(QObject):
         else:
             signals.responses.connected.emit()
 
-    def getPage(self, _: int) -> None:
+    def getPage(self, page: int) -> None:
         if self.sock is None:
             print("sock is null...")
             signals.responses.pages.emit([])
         else:
             message = GetPage()
+            message.page = page
             anyMessage = Any()
             anyMessage.Pack(message)  # pylint: disable=no-member
             strmsg = anyMessage.SerializeToString()
             self.sock.sendall(strmsg)
-            print("Message sent")
 
             buf = self.sock.recv(4)
             count = unpack("!i", buf)[0]
-            print(f"Count received : {count}")
             icons: List[QIcon] = []
             for i in range(count):
-                print(f"Receiving button {i}")
                 buf = self.sock.recv(4)
                 size = unpack("!i", buf)[0]
-                print(f"Size of buffer {i} : {size}")
                 buf = self.sock.recv(size)
-                print("Received data")
                 pixmap = QPixmap()
                 pixmap.loadFromData(buf)
                 icon = QIcon(pixmap)

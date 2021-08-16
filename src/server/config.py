@@ -39,6 +39,4 @@ def readConfig() -> Any:
             if not path.exists(button["icon"]):
                 raise FileNotFoundError(button["icon"])
 
-    print(pages)
-
     return config

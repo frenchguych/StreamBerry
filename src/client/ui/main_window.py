@@ -69,5 +69,4 @@ class MainWindow(QWidget):
         self.footer.setStatus("Connection failed")
 
     def pages(self, icons: List[QIcon]) -> None:
-        print(f"Got myself some icons : {icons}")
         self.grid.setIcons(icons)

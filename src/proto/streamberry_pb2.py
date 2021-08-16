@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\t\n\x07GetPageb\x06proto3'
+  serialized_pb=b'\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\x17\n\x07GetPage\x12\x0c\n\x04page\x18\x01 \x01(\x03\x62\x06proto3'
 )
 
 
@@ -33,6 +33,13 @@ _GETPAGE = _descriptor.Descriptor(
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='page', full_name='gen.proto.streamberry.GetPage.page', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -46,7 +53,7 @@ _GETPAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=53,
+  serialized_end=67,
 )
 
 DESCRIPTOR.message_types_by_name['GetPage'] = _GETPAGE
