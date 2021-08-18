@@ -12,3 +12,10 @@ message ButtonInfo {
     string type = 3;
     string icon = 4;
 }
+
+message ButtonClicked {
+    ButtonInfo buttonInfo = 1;
+}
+
+message ClickAck {
+}

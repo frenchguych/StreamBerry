@@ -4,3 +4,5 @@ zeroconf
 mypy-protobuf
 black
 pyyaml
+grpcio
+pylint-protobuf

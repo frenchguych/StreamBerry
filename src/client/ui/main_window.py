@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QWidget
 from PyQt5.QtGui import QIcon
 
 from client.ui import Footer, Grid
-from client.toolkit.ui import BaseButton
+from client.toolkit.ui.base_button import BaseButton
 from client import signals
 from proto.streamberry_pb2 import ButtonInfo
 

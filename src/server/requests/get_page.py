@@ -1,19 +1,15 @@
-from typing import Any
-
 from google.protobuf import any_pb2
 from common.socket_wrapper import SocketWrapper
 
 from proto.streamberry_pb2 import ButtonInfo, GetPage
 from server.config import Config
 
-from server.context import Context
 
 def getPage(config: Config, client: SocketWrapper, anyMessage: any_pb2.Any):
     message = GetPage()
     anyMessage.Unpack(message)
-    pageName = message.page # pylint: disable=no-member
+    pageName = message.page
     page = [page for page in config.pages if page.name == pageName][0]
-    Context.currentPage = page
     buttons = page.buttons
     client.sendint(len(buttons))
     for button in buttons:

@@ -14,6 +14,7 @@
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.pylintPath": "venv/bin/pylint",
+    "python.linting.pylintArgs": ["--load-plugins", "pylint_protobuf"],
     "python.languageServer": "Pylance",
     "python.formatting.provider": "black"
 }

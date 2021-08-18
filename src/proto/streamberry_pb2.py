@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='gen.proto.streamberry',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\x17\n\x07GetPage\x12\x0c\n\x04page\x18\x01 \x01(\t\"E\n\nButtonInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0c\n\x04icon\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x11streamberry.proto\x12\x15gen.proto.streamberry\"\x17\n\x07GetPage\x12\x0c\n\x04page\x18\x01 \x01(\t\"E\n\nButtonInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0c\n\x04icon\x18\x04 \x01(\t\"F\n\rButtonClicked\x12\x35\n\nbuttonInfo\x18\x01 \x01(\x0b\x32!.gen.proto.streamberry.ButtonInfo\"\n\n\x08\x43lickAckb\x06proto3')
 )
 
 
@@ -107,8 +107,66 @@ _BUTTONINFO = _descriptor.Descriptor(
   serialized_end=138,
 )
 
+
+_BUTTONCLICKED = _descriptor.Descriptor(
+  name='ButtonClicked',
+  full_name='gen.proto.streamberry.ButtonClicked',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='buttonInfo', full_name='gen.proto.streamberry.ButtonClicked.buttonInfo', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=140,
+  serialized_end=210,
+)
+
+
+_CLICKACK = _descriptor.Descriptor(
+  name='ClickAck',
+  full_name='gen.proto.streamberry.ClickAck',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=212,
+  serialized_end=222,
+)
+
+_BUTTONCLICKED.fields_by_name['buttonInfo'].message_type = _BUTTONINFO
 DESCRIPTOR.message_types_by_name['GetPage'] = _GETPAGE
 DESCRIPTOR.message_types_by_name['ButtonInfo'] = _BUTTONINFO
+DESCRIPTOR.message_types_by_name['ButtonClicked'] = _BUTTONCLICKED
+DESCRIPTOR.message_types_by_name['ClickAck'] = _CLICKACK
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 GetPage = _reflection.GeneratedProtocolMessageType('GetPage', (_message.Message,), dict(
@@ -124,6 +182,20 @@ ButtonInfo = _reflection.GeneratedProtocolMessageType('ButtonInfo', (_message.Me
   # @@protoc_insertion_point(class_scope:gen.proto.streamberry.ButtonInfo)
   ))
 _sym_db.RegisterMessage(ButtonInfo)
+
+ButtonClicked = _reflection.GeneratedProtocolMessageType('ButtonClicked', (_message.Message,), dict(
+  DESCRIPTOR = _BUTTONCLICKED,
+  __module__ = 'streamberry_pb2'
+  # @@protoc_insertion_point(class_scope:gen.proto.streamberry.ButtonClicked)
+  ))
+_sym_db.RegisterMessage(ButtonClicked)
+
+ClickAck = _reflection.GeneratedProtocolMessageType('ClickAck', (_message.Message,), dict(
+  DESCRIPTOR = _CLICKACK,
+  __module__ = 'streamberry_pb2'
+  # @@protoc_insertion_point(class_scope:gen.proto.streamberry.ClickAck)
+  ))
+_sym_db.RegisterMessage(ClickAck)
 
 
 # @@protoc_insertion_point(module_scope)

@@ -6,10 +6,10 @@ from PyQt5.QtGui import QIcon, QPixmap
 from google.protobuf.any_pb2 import Any
 from zeroconf import Zeroconf
 
-from proto.streamberry_pb2 import ButtonInfo, GetPage
+from proto.streamberry_pb2 import ButtonClicked, ButtonInfo, ClickAck, GetPage
 
 from client import signals
-from common import SocketWrapper
+from common.socket_wrapper import SocketWrapper
 
 class NetworkWorker(QObject):
     def __init__(self) -> None:
@@ -17,7 +17,6 @@ class NetworkWorker(QObject):
         self.sock: Optional[SocketWrapper] = None
 
     def connectToServer(self) -> None:
-        print("Connecting to server")
         zeroconf = Zeroconf()
         serviceinfo = zeroconf.get_service_info(
             "_streamberry._tcp.local.", "Stream Berry Server._streamberry._tcp.local."
@@ -48,7 +47,7 @@ class NetworkWorker(QObject):
             message = GetPage()
             message.page = page
             anyMessage = Any()
-            anyMessage.Pack(message)  # pylint: disable=no-member
+            anyMessage.Pack(message)
             strmsg = anyMessage.SerializeToString()
             self.sock.send(strmsg)
 
@@ -65,6 +64,18 @@ class NetworkWorker(QObject):
                 icons.append((buttonInfo, icon))
             signals.responses.pages.emit(icons)
 
+    def handleButton(self, buttonInfo: ButtonInfo) -> None:
+        if self.sock is None:
+            print("sock is null...")
+        else:
+            message = ButtonClicked()
+            message.buttonInfo.CopyFrom(buttonInfo)
+            self.sock.sendMessage(message)
+            anyMessage = self.sock.recvmessage()
+            if anyMessage.Is(ClickAck.DESCRIPTOR):
+                signals.responses.release_button.emit()
+
     def run(self) -> None:
         signals.requests.connect.connect(self.connectToServer)
         signals.requests.get_page.connect(self.getPage)
+        signals.requests.handle_button.connect(self.handleButton)

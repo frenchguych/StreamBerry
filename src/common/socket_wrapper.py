@@ -1,6 +1,9 @@
 from socket import socket
 from struct import pack, unpack
 from typing import Tuple
+from google.protobuf import any_pb2
+
+from google.protobuf.message import Message
 
 
 class SocketWrapper:
@@ -28,16 +31,28 @@ class SocketWrapper:
         self.sock.send(size)
         self.sock.send(buffer)
 
+    def sendint(self, value: int) -> None:
+        buffer = pack("!i", value)
+        self.sock.send(buffer)
+
+    def sendMessage(self, message: Message) -> None:
+        anyMessage = any_pb2.Any()
+        anyMessage.Pack(message)
+        strmsg = anyMessage.SerializeToString()
+        self.send(strmsg)
+
     def recv(self) -> bytes:
         size = self.recvint()
         buffer = self.sock.recv(size)
         return buffer
 
-    def sendint(self, value: int) -> None:
-        buffer = pack("!i", value)
-        self.sock.send(buffer)
-
     def recvint(self) -> int:
         buffer = self.sock.recv(4)
         value = unpack("!i", buffer)[0]
         return value
+
+    def recvmessage(self) -> any_pb2.Any:
+        buffer = self.recv()
+        anyMessage = any_pb2.Any()
+        anyMessage.ParseFromString(buffer)
+        return anyMessage

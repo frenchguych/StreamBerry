@@ -54,7 +54,7 @@ class Grid(QWidget):
             button.setStyleSheet("")
             button.setDisabled(True)
             button.buttonInfo = None
-            
+
         for i in range(min(len(buttons), len(icons))):
             button = buttons[i]
             (buttonInfo, icon) = icons[i]

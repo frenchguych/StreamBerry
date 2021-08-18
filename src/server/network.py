@@ -32,4 +32,3 @@ def registerService(sock: SocketWrapper, backlog: int) -> None:
 
     zeroconf = Zeroconf()
     zeroconf.register_service(info)
-    print(f"StreamBerry Server is available at {address}:{port}")

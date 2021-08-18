@@ -1,14 +1,15 @@
 import sys
 
-from typing import Any, Callable, Dict
+from typing import Callable, Dict
 
 from google.protobuf import any_pb2
 from google.protobuf.descriptor import Descriptor
 from common.socket_wrapper import SocketWrapper
-from server.config import readConfig
+from server.config import Config, readConfig
 from server.network import bindSocket, registerService
 from server.requests.get_page import getPage
-from proto.streamberry_pb2 import GetPage
+from server.requests.button_clicked import buttonClicked
+from proto.streamberry_pb2 import ButtonClicked, GetPage
 
 if __name__ == "__main__":
 
@@ -16,16 +17,15 @@ if __name__ == "__main__":
     sock = bindSocket(config)
     registerService(sock, 1)
 
-    requestsMap: Dict[Descriptor, Callable[[Any, SocketWrapper, any_pb2.Any], None]] = {
-        GetPage.DESCRIPTOR: getPage
+    requestsMap: Dict[Descriptor, Callable[[Config, SocketWrapper, any_pb2.Any], None]] = {
+        GetPage.DESCRIPTOR: getPage,
+        ButtonClicked.DESCRIPTOR: buttonClicked,
     }
 
     try:
-        while True:
-            print("Waiting for a client to connect")
-            (client, addr) = sock.accept()
-            print("Connection from client")
-            with client:
+        (client, addr) = sock.accept()
+        with client:
+            while True:
                 # data = client.recv(2048)
                 data = client.recv()
                 if not data:
@@ -36,7 +36,7 @@ if __name__ == "__main__":
                 handlers = [
                     handler
                     for (descriptor, handler) in requestsMap.items()
-                    if anyMessage.Is(descriptor) # pylint: disable=no-member
+                    if anyMessage.Is(descriptor)
                 ]
 
                 if handlers is not None and len(handlers) == 1:
@@ -46,5 +46,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
     finally:
-        print("Exiting")
         sys.exit(0)
