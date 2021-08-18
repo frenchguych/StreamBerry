@@ -4,19 +4,19 @@
 pages:
   - name: "index"
     buttons:
-      - id: "twitch"
-        name: Twitch
+      - name: "twitch"
+        label: Twitch
         type: obs_config
         icon: assets/button_twitch.png
-      - id: "tegh"
-        name: Tea, Earl Grey, Hot
+      - name: "tegh"
+        label: Tea, Earl Grey, Hot
         type: obs_config
         icon: assets/button_tegh.png
-      - id: "maco"
-        name: Makers Corner
+      - name: "maco"
+        label: Makers Corner
         type: obs_config
         icon: assets/button_maco.png
-      - id: "youtube"
-        name: YouTube
+      - name: "youtube"
+        label: YouTube
         type: obs_config
         icon: assets/button_youtube.png

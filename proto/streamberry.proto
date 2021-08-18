@@ -3,5 +3,12 @@ syntax = "proto3";
 package gen.proto.streamberry;
 
 message GetPage {
-    int64 page = 1;
+    string page = 1;
+}
+
+message ButtonInfo {
+    string name = 1;
+    string label = 2;
+    string type = 3;
+    string icon = 4;
 }

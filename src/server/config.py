@@ -1,10 +1,47 @@
 from os import environ, path
-from typing import Any
+from typing import Any, List
 
 import yaml
 
+class ButtonConfig:
+    id: str
+    name: str
+    type: str
+    icon: str
 
-def readConfig() -> Any:
+    def __init__(self, button: Any) -> None:
+        self.name = button['name']
+        self.label = button['label']
+        self.type = button['type']
+        self.icon = button['icon']
+
+class PageConfig:
+    name: str
+    buttons: List[ButtonConfig]
+
+    def __init__(self, page: Any) -> None:
+        self.name = page['name']
+        self.buttons = [ButtonConfig(button) for button in page['buttons']]
+
+class BindConfig:
+    address: str = "0.0.0.0"
+    port: int = 0
+
+    def __init__(self, bind: Any) -> None:
+        if bind is not None and 'address' in bind:
+            self.address = bind['address']
+        if bind is not None and 'port' in bind:
+            self.port = bind['port']
+
+class Config:
+    bind: BindConfig
+    pages: List[PageConfig]
+
+    def __init__(self, config: Any) -> None:
+        self.bind = BindConfig(config.get('bind'))
+        self.pages = [PageConfig(page) for page in config['pages']]
+
+def readConfig() -> Config:
     configFiles = [
         file
         for file in [
@@ -39,4 +76,4 @@ def readConfig() -> Any:
             if not path.exists(button["icon"]):
                 raise FileNotFoundError(button["icon"])
 
-    return config
+    return Config(config)

@@ -1,18 +1,28 @@
-import socket
-from struct import pack
 from typing import Any
 
 from google.protobuf import any_pb2
+from common.socket_wrapper import SocketWrapper
 
-from proto.streamberry_pb2 import GetPage
+from proto.streamberry_pb2 import ButtonInfo, GetPage
+from server.config import Config
 
-def getPage(config: Any, client: socket.socket, anyMessage: any_pb2.Any):
+from server.context import Context
+
+def getPage(config: Config, client: SocketWrapper, anyMessage: any_pb2.Any):
     message = GetPage()
     anyMessage.Unpack(message)
-    page = message.page # pylint: disable=no-member
-    client.send(pack("!i", 4))
-    for button in config['pages'][page]['buttons']:
-        with open(f"{button['icon']}", "rb") as buttonFile:
+    pageName = message.page # pylint: disable=no-member
+    page = [page for page in config.pages if page.name == pageName][0]
+    Context.currentPage = page
+    buttons = page.buttons
+    client.sendint(len(buttons))
+    for button in buttons:
+        buttonInfo = ButtonInfo()
+        buttonInfo.name = button.name
+        buttonInfo.label = button.label
+        buttonInfo.type = button.type
+        buttonInfo.icon = button.icon
+        client.send(buttonInfo.SerializeToString())
+        with open(f"{button.icon}", "rb") as buttonFile:
             buffer = buttonFile.read()
-            client.send(pack("!i", len(buffer)))
-            client.sendall(buffer)
+            client.send(buffer)

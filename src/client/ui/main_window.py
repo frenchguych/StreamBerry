@@ -1,24 +1,23 @@
 import functools
-from typing import Optional, List
+from typing import List, Tuple
 
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
 from PyQt5.QtGui import QIcon
 
 from client.ui import Footer, Grid
-from client.toolkit.core import BaseWorker
-from client.toolkit.ui import BaseButton, ButtonWorker
+from client.toolkit.ui import BaseButton
 from client import signals
+from proto.streamberry_pb2 import ButtonInfo
 
 class MainWindow(QWidget):
     def __init__(
         self,
     ) -> None:
         super().__init__()
-        self.worker: Optional[BaseWorker] = None
         self.initComponent()
         self.initListeners()
         self.initCommunications()
-        self.initNetwork()
+        signals.requests.connect.emit()
 
     def initComponent(self) -> None:
         self.setFixedSize(800, 480)
@@ -42,31 +41,24 @@ class MainWindow(QWidget):
             btn.clicked.connect(functools.partial(self.handleButton, btn))
 
     def initCommunications(self) -> None:
-        self.worker = None
         signals.responses.connected.connect(self.connectedToServer)
         signals.responses.connectionFailed.connect(self.connectionFailed)
         signals.responses.pages.connect(self.pages)
 
     def handleFinished(self) -> None:
-        self.worker = None
+        pass
 
     def handleButton(self, btn: BaseButton) -> None:
-        if self.worker is None:
-            self.worker = ButtonWorker(btn, self.handleFinished)
-            self.worker.start()
-
-    @staticmethod
-    def initNetwork() -> None:
-        signals.requests.connect.emit()
+        pass
 
     def connectedToServer(self) -> None:
         self.footer.setStatus("Connected.")
         self.footer.enableButtons()
         self.grid.enableButtons()
-        signals.requests.get_page.emit(0)
+        signals.requests.get_page.emit("index")
 
     def connectionFailed(self) -> None:
         self.footer.setStatus("Connection failed")
 
-    def pages(self, icons: List[QIcon]) -> None:
-        self.grid.setIcons(icons)
+    def pages(self, buttons: List[Tuple[ButtonInfo, QIcon]]) -> None:
+        self.grid.setButtons(buttons)

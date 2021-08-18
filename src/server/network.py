@@ -1,27 +1,20 @@
 import socket
-from typing import Any
 from zeroconf import ServiceInfo, Zeroconf
 
+from common.socket_wrapper import SocketWrapper
+from server.config import Config
 
-def bindSocket(config: Any) -> socket.socket:
-    address: str = "0.0.0.0"
-    port: int = 0
 
-    if "bind" in config:
-        if "address" in config["bind"]:
-            address = config["bind"]["address"]
-        if "port" in config["bind"]:
-            port = config["bind"]["port"]
-
+def bindSocket(config: Config) -> SocketWrapper:
     sock = socket.socket(
         socket.AF_INET,
         socket.SOCK_STREAM,
     )
-    sock.bind((address, port))
+    sock.bind((config.bind.address, config.bind.port))
 
-    return sock
+    return SocketWrapper(sock)
 
-def registerService(sock: socket.socket, backlog: int) -> None:
+def registerService(sock: SocketWrapper, backlog: int) -> None:
     sock.listen(backlog)
     (address, port) = sock.getsockname()
 

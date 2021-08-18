@@ -1,21 +1,20 @@
 import socket
-from struct import unpack
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from PyQt5.QtCore import QObject
 from PyQt5.QtGui import QIcon, QPixmap
 from google.protobuf.any_pb2 import Any
 from zeroconf import Zeroconf
 
-from proto.streamberry_pb2 import GetPage
+from proto.streamberry_pb2 import ButtonInfo, GetPage
 
 from client import signals
-
+from common import SocketWrapper
 
 class NetworkWorker(QObject):
     def __init__(self) -> None:
         super().__init__()
-        self.sock: Optional[socket.socket] = None
+        self.sock: Optional[SocketWrapper] = None
 
     def connectToServer(self) -> None:
         print("Connecting to server")
@@ -27,19 +26,21 @@ class NetworkWorker(QObject):
         address: str = ""
         port: int = 0
 
+        server: Optional[socket.socket] = None
         if serviceinfo is not None:
             address = socket.inet_ntop(socket.AF_INET, serviceinfo.addresses[0])
             port = serviceinfo.port
 
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.connect((address, port))
+            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            server.connect((address, port))
 
-        if self.sock is None:
+        if server is None:
             signals.responses.connectionFailed.emit()
         else:
+            self.sock = SocketWrapper(server)
             signals.responses.connected.emit()
 
-    def getPage(self, page: int) -> None:
+    def getPage(self, page: str) -> None:
         if self.sock is None:
             print("sock is null...")
             signals.responses.pages.emit([])
@@ -49,19 +50,19 @@ class NetworkWorker(QObject):
             anyMessage = Any()
             anyMessage.Pack(message)  # pylint: disable=no-member
             strmsg = anyMessage.SerializeToString()
-            self.sock.sendall(strmsg)
+            self.sock.send(strmsg)
 
-            buf = self.sock.recv(4)
-            count = unpack("!i", buf)[0]
-            icons: List[QIcon] = []
-            for i in range(count):
-                buf = self.sock.recv(4)
-                size = unpack("!i", buf)[0]
-                buf = self.sock.recv(size)
+            count = self.sock.recvint()
+            icons: List[Tuple[ButtonInfo, QIcon]] = []
+            for _ in range(count):
+                buf = self.sock.recv()
+                buttonInfo = ButtonInfo()
+                buttonInfo.ParseFromString(buf)
+                buf = self.sock.recv()
                 pixmap = QPixmap()
                 pixmap.loadFromData(buf)
                 icon = QIcon(pixmap)
-                icons.append(icon)
+                icons.append((buttonInfo, icon))
             signals.responses.pages.emit(icons)
 
     def run(self) -> None:

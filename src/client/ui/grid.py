@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from PyQt5.QtWidgets import (
     QGridLayout,
@@ -10,6 +10,7 @@ from PyQt5.QtGui import QIcon
 
 from client.ui import GridButton
 from client.toolkit.ui.base_button import BaseButton
+from proto.streamberry_pb2 import ButtonInfo
 
 
 class Grid(QWidget):
@@ -41,7 +42,7 @@ class Grid(QWidget):
                 btn: GridButton = obj.widget()
                 btn.setDisabled(False)
 
-    def setIcons(self, icons: List[QIcon]) -> None:
+    def setButtons(self, icons: List[Tuple[ButtonInfo, QIcon]]) -> None:
         buttons: List[GridButton] = [
             self.layout().itemAt(i).widget()
             for i in range(self.layout().count())
@@ -50,10 +51,14 @@ class Grid(QWidget):
 
         for button in buttons:
             button.setIcon(QIcon("assets/button_empty.png"))
+            button.setStyleSheet("")
             button.setDisabled(True)
-
+            button.buttonInfo = None
+            
         for i in range(min(len(buttons), len(icons))):
             button = buttons[i]
-            button.setIcon(icons[i])
+            (buttonInfo, icon) = icons[i]
+            button.setIcon(icon)
             button.setStyleSheet("border: 0;")
             button.setDisabled(False)
+            button.buttonInfo = buttonInfo
