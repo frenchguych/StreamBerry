@@ -1,3 +1,4 @@
+import json
 from google.protobuf import any_pb2
 from common.socket_wrapper import SocketWrapper
 
@@ -18,7 +19,10 @@ def getPage(config: Config, client: SocketWrapper, anyMessage: any_pb2.Any):
         buttonInfo.label = button.label
         buttonInfo.type = button.type
         buttonInfo.icon = button.icon
+        buttonInfo.params = json.dumps(button.params)
+        print("Check 1")
         client.send(buttonInfo.SerializeToString())
+        print("Check 2")
         with open(f"{button.icon}", "rb") as buttonFile:
             buffer = buttonFile.read()
             client.send(buffer)

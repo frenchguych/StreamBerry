@@ -8,6 +8,7 @@ def buttonClicked(_: Config, client: SocketWrapper, anyMessage: any_pb2.Any) -> 
     message = ButtonClicked()
     message.ParseFromString(anyMessage.value)
     print(f"Received a click request for {message.buttonInfo.name}")
+    print(message.buttonInfo.params)
     # Do something with the button click
     # For example, send a message to the client
     response = ClickAck()

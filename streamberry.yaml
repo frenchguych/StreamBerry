@@ -8,10 +8,16 @@ pages:
         label: Twitch
         type: obs_config
         icon: assets/button_twitch.png
+        params:
+            profile: "03 - Frenchguy - Twitch"
+            scenes: "03 - Frenchguy - Twitch"
       - name: "tegh"
         label: Tea, Earl Grey, Hot
         type: obs_config
         icon: assets/button_tegh.png
+        params:
+            profile: "04 - TEGH - Twitch"
+            scenes: "02 - TEGH - YouTube"
       - name: "maco"
         label: Makers Corner
         type: obs_config

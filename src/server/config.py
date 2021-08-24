@@ -8,12 +8,18 @@ class ButtonConfig:
     name: str
     type: str
     icon: str
+    params: str
 
     def __init__(self, button: Any) -> None:
         self.name = button['name']
         self.label = button['label']
         self.type = button['type']
         self.icon = button['icon']
+        if 'params' in button:
+            self.params = button['params']
+        else:
+            self.params = ''
+        print(self.params)
 
 class PageConfig:
     name: str

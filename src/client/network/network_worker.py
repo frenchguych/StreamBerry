@@ -52,6 +52,7 @@ class NetworkWorker(QObject):
             self.sock.send(strmsg)
 
             count = self.sock.recvint()
+            print(f"count = {count}")
             icons: List[Tuple[ButtonInfo, QIcon]] = []
             for _ in range(count):
                 buf = self.sock.recv()

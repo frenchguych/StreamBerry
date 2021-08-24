@@ -11,6 +11,7 @@ message ButtonInfo {
     string label = 2;
     string type = 3;
     string icon = 4;
+    string params = 5;
 }
 
 message ButtonClicked {
